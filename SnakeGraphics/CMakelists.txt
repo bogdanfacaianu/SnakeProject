@@ -1,0 +1,68 @@
+cmake_minimum_required(VERSION 2.7)
+SET(PROJECT_NAME SnakeGraphics)
+
+PROJECT(${PROJECT_NAME})
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/bin)
+
+set(HEADERS
+	include/Presets.h
+	include/Texture.h
+	include/Game.h
+	include/SymbolTranslation.h
+	include/Timer.h
+	include/Button.h
+	include/SQLite.h
+	include/sqlite3.h
+	include/SDL_mixer.h
+  )
+  
+set(SOURCES
+	src/MainG.cpp
+	src/Texture.cpp
+	src/Game.cpp
+	src/SymbolTranslation.cpp
+	src/Timer.cpp
+	src/Button.cpp
+	src/SQLite.cpp
+	src/sqlite3.c
+	)
+include_directories(
+	include
+	utility/include/catch
+	../utility/SDL2/include
+	../utility/SQL
+	../include
+)
+
+link_directories(
+	${CMAKE_HOME_DIRECTORY}/utility/SDL2/lib/x86
+	${CMAKE_HOME_DIRECTORY}/lib/Debug
+	${CMAKE_HOME_DIRECTORY}/utility/SQL
+)
+
+link_directories(
+   ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+
+)
+
+add_executable(
+	${PROJECT_NAME} 
+	${HEADERS} ${SOURCES}
+)
+target_link_libraries(
+${PROJECT_NAME}
+	SDL2
+	SDL2main
+	SDL2test
+	SDL2_image
+	SDL2_ttf
+	Snake
+	SDL2_mixer
+)
+
+set_target_properties(SnakeGraphics PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
+
+add_definitions(-D"FOO=\\"${CMAKE_SOURCE_DIR}\\"")

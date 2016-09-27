@@ -1,0 +1,79 @@
+cmake_minimum_required(VERSION 2.7)
+SET(PROJECT_NAME Snake)
+
+PROJECT(${PROJECT_NAME})
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/bin)
+
+set(HEADERS
+	include/Item.h
+	include/Food.h
+	include/Bonus.h
+	include/Surprise.h
+	include/GameMap.h	
+	include/Player.h	
+	include/Position.h
+	include/Snake.h
+	include/Rules.h
+	include/DLLExportOptions.h
+	include/Command.h
+	include/MoveUp.h
+	include/MoveLeft.h
+	include/MoveRight.h
+	include/MoveDown.h
+	include/InputHandler.h
+  )
+  
+set(SOURCES
+	src/Food.cpp
+	src/Bonus.cpp
+	src/Surprise.cpp
+	src/GameMap.cpp	
+	src/Player.cpp
+	src/Position.cpp
+	src/Snake.cpp
+	src/Rules.cpp
+	src/MoveUp.cpp
+	src/MoveLeft.cpp
+	src/MoveRight.cpp
+	src/MoveDown.cpp
+	src/InputHandler.cpp
+	)
+include_directories(
+	include
+	utility/include/catch
+	utility/SDL2/include
+	utility/SQL
+	SnakeGraphics/include
+)
+
+link_directories(
+   ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+
+)
+
+link_directories(
+	${CMAKE_HOME_DIRECTORY}/utility/SDL2/lib/x86
+)
+
+
+add_subdirectory(
+	SnakeGraphics
+)
+
+
+add_library(
+	${PROJECT_NAME} SHARED
+	${HEADERS} ${SOURCES}
+)
+
+target_link_libraries(
+${PROJECT_NAME}
+	SDL2
+	SDL2main
+	SDL2test
+	SDL2_mixer
+)
+
